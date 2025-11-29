@@ -27,3 +27,16 @@ jobs:
 
       - name: Verify Docker pull
         run: docker pull anascoder4897/anaskhan-cicdtesting:latest
+
+      - name : push to ec2 
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            sudo docker pull anascoder4897/anaskhan-cicdtesting:latest
+            sudo docker stop web-app || true 
+            sudo docker rm web-app || true 
+            sudo docker run --restart-always -d --name web-app -p  8000:8000 anascoder4897/anaskhan-cicdtesting:latest
