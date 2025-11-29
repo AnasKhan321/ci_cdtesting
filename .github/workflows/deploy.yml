@@ -39,4 +39,4 @@ jobs:
             sudo docker pull anascoder4897/anaskhan-cicdtesting:latest
             sudo docker stop web-app || true 
             sudo docker rm web-app || true 
-            sudo docker run --restart-always -d --name web-app -p  8000:8000 anascoder4897/anaskhan-cicdtesting:latest
+            sudo docker run --restart=always -d --name web-app -p  8000:8000 anascoder4897/anaskhan-cicdtesting:latest
