@@ -1,0 +1,31 @@
+name : Deploying the program 
+
+on : 
+  push : 
+    branches : 
+      - main 
+
+
+jobs : 
+  build-and-push : 
+    runs_on : ubuntu-latest 
+    steps : 
+      - name : cloning the repo 
+        uses : actions/checkout@v2 
+
+      - name : login into the docker 
+        uses : docker/login-actions@v1 
+        with : 
+          username : ${{secrets.DOCKER_USERNAME}}
+          pasword : ${{secrets.DOCKER_PASSWORD}}
+
+      - name : building docker image and push 
+        uses :  docker/build-push-action@v6
+        with:
+          context : . 
+          push: true
+          tags: anascoder4897/anaskhan-cicdtesting
+      - name : verifying the docker pull 
+        run : docker pull anascoder4897/anaskhan-cicdtesting
+
+      
